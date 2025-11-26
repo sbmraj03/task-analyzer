@@ -32,7 +32,7 @@ def calculate_priority_score(task_data, all_tasks=None, strategy='smart_balance'
     elif strategy == 'deadline_driven':
         return calculate_deadline_driven(days_until_due, importance)
     else:  # smart_balance
-        return calculate_smart_balance(days_until_due, importance, estimated_hours, dependencies, all_tasks)
+        return calculate_smart_balance(task_data, days_until_due, importance, estimated_hours, dependencies, all_tasks)
 
 
 def calculate_fastest_wins(estimated_hours, importance):
@@ -65,7 +65,7 @@ def calculate_deadline_driven(days_until_due, importance):
     return urgency_score + (importance * 2)
 
 
-def calculate_smart_balance(days_until_due, importance, estimated_hours, dependencies, all_tasks):
+def calculate_smart_balance(task, days_until_due, importance, estimated_hours, dependencies, all_tasks):
     """Balance all factors intelligently"""
     
     # 1. Urgency Score (0-40 points)
@@ -94,7 +94,7 @@ def calculate_smart_balance(days_until_due, importance, estimated_hours, depende
         effort_score = 2
     
     # 4. Dependency Score (0-10 points)
-    dependency_score = count_blocked_tasks(task_data, all_tasks) * 5
+    dependency_score = count_blocked_tasks(task, all_tasks) * 5
     dependency_score = min(dependency_score, 10)  # Cap at 10
     
     total_score = urgency_score + importance_score + effort_score + dependency_score

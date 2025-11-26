@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Smart Task Analyzer</h1>
+            <p>Intelligently prioritize your tasks</p>
+        </header>
+
+        <!-- Strategy Selection -->
+        <div class="strategy-section">
+            <label for="strategy">Sorting Strategy:</label>
+            <select id="strategy">
+                <option value="smart_balance">Smart Balance (Recommended)</option>
+                <option value="fastest_wins">Fastest Wins</option>
+                <option value="high_impact">High Impact</option>
+                <option value="deadline_driven">Deadline Driven</option>
+            </select>
+        </div>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <h2>Add Tasks</h2>
+            
+            <!-- Single Task Form -->
+            <div class="task-form">
+                <input type="text" id="taskTitle" placeholder="Task title" required>
+                <input type="date" id="taskDueDate" required>
+                <input type="number" id="taskHours" placeholder="Estimated hours" min="0.5" step="0.5" required>
+                <input type="number" id="taskImportance" placeholder="Importance (1-10)" min="1" max="10" required>
+                <button onclick="addTask()" class="btn-add">Add Task</button>
+            </div>
+
+            <!-- Bulk JSON Input -->
+            <div class="bulk-input">
+                <h3>Or paste JSON tasks:</h3>
+                <textarea id="bulkTasks" placeholder='[{"id": 1, "title": "Task", "due_date": "2025-12-01", "estimated_hours": 2, "importance": 8, "dependencies": []}]'></textarea>
+                <button onclick="loadBulkTasks()" class="btn-secondary">Load JSON Tasks</button>
+            </div>
+
+            <!-- Current Tasks List -->
+            <div class="current-tasks">
+                <h3>Current Tasks (<span id="taskCount">0</span>)</h3>
+                <div id="tasksList"></div>
+            </div>
+
+            <!-- Analyze Button -->
+            <button onclick="analyzeTasks()" class="btn-primary">🔍 Analyze Tasks</button>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Analyzing tasks...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message hidden"></div>
+
+        <!-- Output Section -->
+        <div id="results" class="results-section hidden">
+            <h2>Prioritized Tasks</h2>
+            <div id="topSuggestions" class="suggestions"></div>
+            <div id="sortedTasks" class="sorted-tasks"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
